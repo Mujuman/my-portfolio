@@ -479,11 +479,6 @@ header{
 
 
 }
-@media (max-width:477px) {
-    .progress{
-    width: 200px;
-}
-}
 .service{
     padding: 40px 0;
 }
@@ -867,6 +862,7 @@ footer{
     justify-content: space-between;
     flex-basis: 50%;
 }
+
 
 
 
