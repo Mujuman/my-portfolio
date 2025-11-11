@@ -33,7 +33,7 @@ a{
     margin: auto;
 }
 body{
-    padding-top: 90px;
+    padding-top: 190px;
 }
 .container1{
     display: flex;
@@ -887,6 +887,7 @@ footer{
     justify-content: space-between;
     flex-basis: 50%;
 }
+
 
 
 
