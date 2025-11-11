@@ -4,13 +4,10 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
-/* :root {
-    --primary: #170ceacf;      
-    --secondary: #00C9A7;    
-    --light: #F3F4F6;        
-    --error: #FF5A5F;  
-    --dark: #0D1117;        
-} */
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
     --primary: rgb(16, 228, 48);      
     --secondary: #00C9A7;    
@@ -19,13 +16,7 @@
     --dark: #0D1117;        
 }
 
- /* :root {
-    --primary: #2563eb;      
-    --secondary: #7c3aed;    
-    --accent: #06b6d4;       
-    --light: #f8fafc;     
-    --dark: #1e293b;         
-}  */
+
 .img{
     width: 100%;
 }
@@ -896,6 +887,7 @@ footer{
     justify-content: space-between;
     flex-basis: 50%;
 }
+
 
 
 
