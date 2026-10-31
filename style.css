@@ -789,22 +789,16 @@ footer {
 }
 
 footer .container {
-    align-items: flex-start;
-    gap: 40px;
-}
-
-.cont1 {
-    display: flex;
-    flex: 1;
+    align-items: start;
+    display: grid;
     gap: 36px;
-    justify-content: space-between;
+    grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
 }
 
 .foot-desc,
 .quick,
 .fopt-pro,
 .foot-skill {
-    flex: 1;
     min-width: 0;
 }
 
@@ -817,10 +811,20 @@ footer .container {
     margin-bottom: 14px;
 }
 
+.foot-desc h3,
+.quick h3,
+.fopt-pro h3,
+.foot-skill h3 {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+}
+
 .foot-desc p {
     color: #d6d3d1;
     font-size: 13px;
     line-height: 1.8;
+    max-width: 34ch;
     margin: 0;
 }
 
@@ -949,6 +953,19 @@ footer hr {
     .contact-info1 {
         gap: 22px;
     }
+
+    footer .container {
+        gap: 32px 28px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .foot-desc {
+        grid-column: 1 / -1;
+    }
+
+    .foot-desc p {
+        max-width: 60ch;
+    }
 }
 
 @media (max-width: 680px) {
@@ -1034,26 +1051,22 @@ footer hr {
         min-height: 300px;
     }
 
-    footer .container,
-    .cont1 {
-        flex-direction: column;
-        gap: 28px;
+    footer {
+        padding: 42px 0 22px;
     }
 
     footer .container {
-        display: flex;
+        gap: 28px 20px;
     }
 
-    .cont1 {
-        display: flex;
-        width: 100%;
-    }
-
-    .foot-desc,
-    .quick,
-    .fopt-pro,
     .foot-skill {
-        width: 100%;
+        display: grid;
+        gap: 4px 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .foot-skill h3 {
+        grid-column: 1 / -1;
     }
 
     .project1 .container {
@@ -1061,6 +1074,7 @@ footer hr {
     }
 
     .hr {
+        align-items: center;
         flex-direction: column;
         gap: 14px;
         text-align: center;
@@ -1099,6 +1113,17 @@ footer hr {
 
     .con {
         width: calc(100% - 32px);
+    }
+
+    footer .container {
+        gap: 26px 14px;
+    }
+
+    .quick a,
+    .fopt-pro a,
+    .foot-skill p {
+        font-size: 12px;
+        overflow-wrap: anywhere;
     }
 }
 
