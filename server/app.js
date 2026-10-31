@@ -5,14 +5,14 @@ import MongoStore from "connect-mongo";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import { connectDatabase, ensureInitialPortfolio } from "./database.js";
-import { ContactMessage, PortfolioState, Profile, Project, RequestBucket, Skill } from "./models.js";
+import { ContactMessage, Profile, Project, Skill } from "./models.js";
 import {
   createSlug,
   hasValidCsrfToken,
-  hashPassword,
   limitRequests,
   passwordHashFormatIsValid,
-  validOrigin
+  validOrigin,
+  verifyPassword
 } from "./security.js";
 
 const app = express();
@@ -66,12 +66,22 @@ app.use(express.json({ limit: "20kb", type: "application/json" }));
 
 let sessionStore;
 
-const isAdminConfigured = () => Boolean(
-  process.env.ADMIN_USERNAME &&
-  process.env.SESSION_SECRET &&
-  process.env.SESSION_SECRET.length >= 32 &&
-  passwordHashFormatIsValid(process.env.ADMIN_PASSWORD_HASH)
-);
+function isAdminConfigured() {
+  if (!process.env.ADMIN_USERNAME || !process.env.SESSION_SECRET ||
+      process.env.SESSION_SECRET.length < 32 ||
+      !passwordHashFormatIsValid(process.env.ADMIN_PASSWORD_HASH) ||
+      !process.env.APP_ORIGIN) {
+    return false;
+  }
+  try {
+    const origin = new URL(process.env.APP_ORIGIN);
+    return origin.origin === process.env.APP_ORIGIN &&
+      (origin.protocol === "https:" ||
+        (origin.protocol === "http:" && ["localhost", "127.0.0.1"].includes(origin.hostname)));
+  } catch {
+    return false;
+  }
+}
 
 const initializeRequest = asyncRoute(async (req, res, next) => {
   try {
@@ -125,7 +135,7 @@ function validWebUrl(value, allowLocalImage = false) {
     return true;
   }
   try {
-    return ["https:", "http:"].includes(new URL(value).protocol);
+    return new URL(value).protocol === "https:";
   } catch {
     return false;
   }
@@ -208,7 +218,7 @@ router.post("/admin/login", asyncRoute(async (req, res) => {
   const usernameMatches = username.length <= 100 &&
     username === process.env.ADMIN_USERNAME;
   const passwordMatches = password.length <= 1024 &&
-    hashPassword(password, process.env.ADMIN_PASSWORD_HASH);
+    verifyPassword(password, process.env.ADMIN_PASSWORD_HASH);
   if (!usernameMatches || !passwordMatches) {
     return res.status(401).json({ error: "The username or password is incorrect." });
   }

@@ -56,7 +56,7 @@ function renderSkills(skills) {
     (index < firstColumnLength ? primary : secondary).append(box);
   });
 
-  const footerSkills = document.getElementById("footer-skills");
+  const footerSkills = document.getElementById("footer-skill-list");
   footerSkills.replaceChildren();
   skills.forEach((skill) => footerSkills.append(makeElement("p", "", skill.name)));
 }

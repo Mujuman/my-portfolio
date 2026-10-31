@@ -505,6 +505,12 @@ header {
     height: 100%;
 }
 
+.skill-fill {
+    background: linear-gradient(90deg, #fb923c, var(--primary));
+    border-radius: inherit;
+    height: 100%;
+}
+
 .pro1 { width: 98%; }
 .pro2 { width: 90%; }
 .pro3 { width: 90%; }
@@ -834,6 +840,33 @@ header {
     transform: translateY(-2px);
 }
 
+.contact-info1 .send-btn:disabled {
+    cursor: wait;
+    opacity: 0.7;
+}
+
+#contact-status {
+    font-size: 13px;
+    margin: 0;
+}
+
+#contact-status[data-kind="success"] {
+    color: #15803d;
+}
+
+#contact-status[data-kind="error"] {
+    color: #b91c1c;
+}
+
+.contact-honeypot {
+    height: 1px;
+    left: -10000px;
+    overflow: hidden;
+    position: absolute;
+    top: auto;
+    width: 1px;
+}
+
 .map {
     border: 1px solid var(--border);
     border-radius: 14px;
@@ -1126,13 +1159,17 @@ footer hr {
     }
 
     .foot-skill {
-        display: grid;
-        gap: 4px 12px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: block;
     }
 
     .foot-skill h3 {
-        grid-column: 1 / -1;
+        margin-bottom: 12px;
+    }
+
+    #footer-skill-list {
+        display: grid;
+        gap: 4px 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .project1 .container {

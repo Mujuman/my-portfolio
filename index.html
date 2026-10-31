@@ -496,8 +496,9 @@
             <a href="https://github.com/Mujuman/e-comerce">E-commerce</a>
 	</div>
 
-  <div class="foot-skill">
+  <div class="foot-skill" id="footer-skills">
 		  <h3>Skill <div class="line2"></div></h3>
+        <div id="footer-skill-list">
 		    <p>Html 5</p>
         <p>Css</p>
         <p>Bootsrap 5</p>
@@ -507,6 +508,7 @@
         <p>MongoDB</p>
         <p>React Js</p>
         <p>Php</p>
+        </div>
 	</div>
 
 	</div>
@@ -524,9 +526,6 @@
   </footer>
 
   <script>
-    let menu=document.getElementById("menu");
-    let nav=document.getElementById("nav");
-    let times=document.getElementById("times");
     let themeToggle=document.getElementById("theme-toggle");
     let themeIcon=themeToggle.querySelector("i");
 
@@ -551,72 +550,12 @@
     themeToggle.addEventListener("click", function() {
       setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", true);
     });
-
-    // to open nav
-  menu.addEventListener("click",function(){
-    nav.style.right="0";
-  })
-// to cose nav
-  times.addEventListener("click",function(){
-    nav.style.right="-100%";
-  })
-  function check() {
-      // Get input values
-      let name = document.getElementById("name1").value;
-      let email = document.getElementById("email").value;
-      let number = document.getElementById("number").value;
-      
-
-      // Regular expressions
-      let nameRegex = /^[A-Za-z\s]+$/;
-      let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      let numberRegex = /^[0-9]+$/;
-  
-      // Validation checks
-      if (name === "") {
-         alert("Name field is required!");
-      } else if (!nameRegex.test(name)) {
-         alert("Name must contain only letters!");
-      } else if (email === "") {
-        alert("Email field is required!");
-      } else if (!emailRegex.test(email)) {
-        alert("Please enter a valid email address!");
-      } else if (number === "") {
-        alert("Number field is required!");
-      } else if (!numberRegex.test(number)) {
-        alert("Number must contain digits only!");
-      } else {
-        alert("✅ All fields are valid!");
-      }
-    }
-  error.innerHTML=erro;
-
-	    // Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-anchor.addEventListener('click', function (e) {
-e.preventDefault();
-                
-const targetId = this.getAttribute('href');
-if(targetId === '#') return;
-                
-const targetElement = document.querySelector(targetId);
-if(targetElement) {
-window.scrollTo({
-
-behavior: 'smooth'});
-                }
-            });
-        });
- 
-</script>
-
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js">
-
-</script>
-
-<script>
-  AOS.init();
-</script>
+  </script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+  <script src="/portfolio.js" defer></script>
 </body>
 
 </html>

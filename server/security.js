@@ -1,7 +1,7 @@
 import { createHash, scryptSync, timingSafeEqual } from "node:crypto";
 import { RequestBucket } from "./models.js";
 
-export function hashPassword(password, encodedHash) {
+export function verifyPassword(password, encodedHash) {
   const [algorithm, salt, hash] = String(encodedHash || "").split("$");
   if (algorithm !== "scrypt" || !/^[a-f0-9]{32,128}$/i.test(salt || "") || !/^[a-f0-9]{128}$/i.test(hash || "")) {
     return false;
