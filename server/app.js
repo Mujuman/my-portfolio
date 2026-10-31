@@ -86,8 +86,8 @@ function isAdminConfigured() {
 const initializeRequest = asyncRoute(async (req, res, next) => {
   try {
     await connectDatabase();
-  } catch {
-    console.error("Portfolio database connection failed.");
+  } catch (error) {
+    logDatabaseConnectionFailure(error);
     return res.status(503).json({ error: "The portfolio service is temporarily unavailable." });
   }
 
@@ -155,6 +155,17 @@ function publicError(res, error) {
   }
   console.error("Portfolio API operation failed.");
   return res.status(500).json({ error: "The request could not be completed." });
+}
+
+function logDatabaseConnectionFailure(error) {
+  const message = error instanceof Error
+    ? error.message.replace(/mongodb(?:\+srv)?:\/\/[^\s"'<>]+/gi, "mongodb+srv://[redacted]")
+    : "Unknown database connection error.";
+  console.error("Portfolio database connection failed.", {
+    name: error instanceof Error ? error.name : "UnknownError",
+    code: error?.code,
+    message
+  });
 }
 
 router.get("/health", (req, res) => {
@@ -417,8 +428,8 @@ async function ensureApiReady(req, res, next) {
   try {
     await connectDatabase();
     return next();
-  } catch {
-    console.error("Portfolio database connection failed.");
+  } catch (error) {
+    logDatabaseConnectionFailure(error);
     return res.status(503).json({ error: "The portfolio service is temporarily unavailable." });
   }
 }

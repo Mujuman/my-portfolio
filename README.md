@@ -2,7 +2,7 @@
 
 ## Backend and owner dashboard
 
-The public portfolio reads its profile, skills, and projects from MongoDB through the Express API. Contact form messages are stored privately and can be read, marked, or deleted in the owner dashboard at `/admin.html`.
+The public portfolio reads its profile, skills, and projects from MongoDB through the Express API. Contact form messages are stored privately and can be read, marked, or deleted in the owner dashboard at `/admin/`.
 
 ### Rotate the database password first
 
@@ -19,7 +19,7 @@ The MongoDB connection string previously pasted into chat contains database cred
    - `APP_ORIGIN`: the exact public origin, for example `https://mujahidh.vercel.app` (no trailing slash). Admin sign-in stays disabled until this is set.
 3. In Atlas Network Access, allow connections from the Vercel deployment. Prefer Vercel Secure Compute/static egress IP allowlisting where available. If a broad IP rule is unavoidable, use a dedicated least-privilege database user with a newly rotated strong password.
 4. Redeploy after setting environment variables.
-5. Open `/admin.html`, sign in, and manage profile details, projects, skills, and contact submissions.
+5. Open `/admin/`, sign in, and manage profile details, projects, skills, and contact submissions.
 
 Vercel's default deployment URL should also be added as an `APP_ORIGIN`-appropriate deployment environment value if preview deployments need dashboard writes. Avoid allowing arbitrary origins.
 
