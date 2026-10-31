@@ -4,7 +4,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="images/favicon.png" />
     <title>Mujahid's Portfolio</title>
 	<!-- Open Graph / Social Media Preview Tags -->
   <!-- SEO -->
@@ -59,6 +59,18 @@
           gtag('config', 'G-20QJ56G8M3');
     </script>
 
+    <script>
+      try {
+        if (localStorage.getItem("portfolio-theme") === "dark") {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch (error) {
+        console.warn("The saved theme preference could not be loaded.", error);
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -72,7 +84,12 @@
             <span>Mujahid<span class="dot">.</span></span>
           </div>
 
-          <div class="menu" id="menu"><i class="fa-solid fa-bars"></i></div>
+          <div class="header-actions">
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
+              <i class="fa-solid fa-moon" aria-hidden="true"></i>
+            </button>
+            <div class="menu" id="menu"><i class="fa-solid fa-bars"></i></div>
+          </div>
 
           <div class="nav" id="nav">
             <div class="times" id="times"><i class="fa-solid fa-xmark"></i></div>
@@ -612,6 +629,31 @@
     let menu=document.getElementById("menu");
     let nav=document.getElementById("nav");
     let times=document.getElementById("times");
+    let themeToggle=document.getElementById("theme-toggle");
+    let themeIcon=themeToggle.querySelector("i");
+
+    function setTheme(theme, savePreference) {
+      let isDark = theme === "dark";
+      document.documentElement.dataset.theme = isDark ? "dark" : "light";
+      themeToggle.setAttribute("aria-pressed", String(isDark));
+      themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+      themeToggle.title = isDark ? "Switch to light mode" : "Switch to dark mode";
+      themeIcon.className = isDark ? "fa-solid fa-sun" : "fa-solid fa-moon";
+
+      if (savePreference) {
+        try {
+          localStorage.setItem("portfolio-theme", isDark ? "dark" : "light");
+        } catch (error) {
+          console.warn("The theme preference could not be saved.", error);
+        }
+      }
+    }
+
+    setTheme(document.documentElement.dataset.theme, false);
+    themeToggle.addEventListener("click", function() {
+      setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", true);
+    });
+
     // to open nav
   menu.addEventListener("click",function(){
     nav.style.right="0";
@@ -680,7 +722,6 @@ behavior: 'smooth'});
 </body>
 
 </html>
-
 
 
 

@@ -2,10 +2,11 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "DM Sans", "Segoe UI", sans-serif;
 }
 
 :root {
+    color-scheme: light;
     --primary: #f97316;
     --secondary: #ea580c;
     --light: #fff;
@@ -14,6 +15,41 @@
     --muted: #737373;
     --surface: #fff7ed;
     --border: #e7e5e4;
+    --page-bg: #fff;
+    --text: #171717;
+    --text-muted: #737373;
+    --text-subtle: #525252;
+    --card-bg: #fff;
+    --input-bg: #fafaf9;
+    --input-placeholder: #a3a3a3;
+    --header-bg: rgba(255, 255, 255, 0.96);
+    --header-border: rgba(231, 229, 228, 0.9);
+    --home-start: #fffaf5;
+    --home-end: #fff;
+    --accent-bg: #ffedd5;
+    --social-bg: #262626;
+    --dark-surface: #1c1917;
+    --progress-track: #44403c;
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg: #141311;
+    --text: #f5f5f4;
+    --text-muted: #b7b0aa;
+    --text-subtle: #d6d3d1;
+    --surface: #28221d;
+    --border: #39332e;
+    --card-bg: #1c1a18;
+    --input-bg: #211f1c;
+    --input-placeholder: #a8a29e;
+    --header-bg: rgba(20, 19, 17, 0.96);
+    --header-border: #39332e;
+    --home-start: #211912;
+    --home-end: #141311;
+    --accent-bg: #392514;
+    --social-bg: #292524;
+    --dark-surface: #0e0d0c;
 }
 
 html {
@@ -29,10 +65,11 @@ body {
 }
 
 body {
-    background: var(--light);
-    color: var(--dark);
+    background: var(--page-bg);
+    color: var(--text);
     line-height: 1.6;
     padding-top: 72px;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -65,14 +102,15 @@ img {
 }
 
 header {
-    background: rgba(255, 255, 255, 0.96);
-    border-bottom: 1px solid rgba(231, 229, 228, 0.9);
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--header-border);
     left: 0;
     padding: 14px 0;
     position: fixed;
     right: 0;
     top: 0;
     z-index: 100;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .container1 {
@@ -81,8 +119,36 @@ header {
     justify-content: space-between;
 }
 
+.header-actions {
+    align-items: center;
+    display: flex;
+    gap: 14px;
+}
+
+.theme-toggle {
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text);
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 16px;
+    height: 42px;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    width: 42px;
+}
+
+.theme-toggle:hover {
+    background: var(--surface);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
+}
+
 .logo {
-    color: var(--dark);
+    color: var(--text);
     font-size: 27px;
     font-weight: 800;
     letter-spacing: -1px;
@@ -104,7 +170,7 @@ header {
 }
 
 .nav a {
-    color: #525252;
+    color: var(--text-subtle);
     font-size: 14px;
     font-weight: 700;
     transition: color 0.2s ease;
@@ -142,7 +208,7 @@ header {
 .home {
     background:
         radial-gradient(ellipse at 82% 18%, rgba(249, 115, 22, 0.12), transparent 34%),
-        linear-gradient(135deg, #fffaf5 0%, #fff 70%);
+        linear-gradient(135deg, var(--home-start) 0%, var(--home-end) 70%);
     padding: 80px 0 72px;
 }
 
@@ -153,7 +219,7 @@ header {
 }
 
 .home-text {
-    color: var(--dark);
+    color: var(--text);
     line-height: 1.65;
 }
 
@@ -165,14 +231,14 @@ header {
 }
 
 .home-text .descr {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 16px;
     line-height: 1.8;
     margin-bottom: 28px;
 }
 
 .home .image {
-    background: #ffedd5;
+    background: var(--accent-bg);
     border: 1px solid rgba(249, 115, 22, 0.18);
     border-radius: 28px;
     overflow: hidden;
@@ -223,7 +289,7 @@ header {
 }
 
 .btn2 {
-    color: var(--dark);
+    color: var(--text);
 }
 
 .year {
@@ -238,7 +304,7 @@ header {
 .project,
 .client {
     align-items: flex-start;
-    color: var(--dark);
+    color: var(--text);
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -263,7 +329,7 @@ header {
 .experience p,
 .project p,
 .client p {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 13px;
     line-height: 1.4;
     margin: 0;
@@ -276,7 +342,7 @@ header {
 }
 
 .heading {
-    color: var(--dark);
+    color: var(--text);
     display: flex;
     justify-content: center;
     margin-bottom: 44px;
@@ -327,7 +393,7 @@ header {
 }
 
 .des p {
-    color: var(--muted);
+    color: var(--text-muted);
     line-height: 1.8;
 }
 
@@ -339,7 +405,7 @@ header {
 }
 
 .about-info div p {
-    color: #525252;
+    color: var(--text-subtle);
     font-size: 14px;
     margin-bottom: 12px;
     overflow-wrap: anywhere;
@@ -357,7 +423,7 @@ header {
 
 .link a {
     align-items: center;
-    background: #262626;
+    background: var(--social-bg);
     border-radius: 50%;
     color: var(--light);
     display: inline-flex;
@@ -374,7 +440,7 @@ header {
 
 .skill,
 .project1 {
-    background: #1c1917;
+    background: var(--dark-surface);
     color: var(--light);
     padding: 82px 0;
 }
@@ -413,7 +479,7 @@ header {
 }
 
 .progress {
-    background: #44403c;
+    background: var(--progress-track);
     border: 0;
     border-radius: 999px;
     flex: 1;
@@ -468,7 +534,7 @@ header {
 
 .card {
     align-items: flex-start;
-    background: var(--light);
+    background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 14px;
     display: flex;
@@ -480,7 +546,7 @@ header {
 .card:hover {
     border-color: rgba(249, 115, 22, 0.5);
     box-shadow: 0 16px 36px rgba(28, 25, 23, 0.08);
-    color: var(--dark);
+    color: var(--text);
     transform: translateY(-5px);
 }
 
@@ -516,7 +582,7 @@ header {
 }
 
 .card p {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 14px;
     line-height: 1.7;
     margin: 0;
@@ -651,7 +717,7 @@ header {
 
 .card1 {
     align-items: center;
-    background: var(--light);
+    background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 14px;
     display: flex;
@@ -664,7 +730,7 @@ header {
 }
 
 .card1:hover {
-    background: var(--light);
+    background: var(--card-bg);
     border-color: var(--primary);
     transform: translateY(-3px);
 }
@@ -701,7 +767,7 @@ header {
 }
 
 .card1 p {
-    color: var(--muted);
+    color: var(--text-muted);
     font-size: 13px;
     margin: 0;
     overflow-wrap: anywhere;
@@ -725,10 +791,10 @@ header {
 
 .contact-info1 input,
 .contact-info1 textarea {
-    background: #fafaf9;
+    background: var(--input-bg);
     border: 1px solid var(--border);
     border-radius: 8px;
-    color: var(--dark);
+    color: var(--text);
     margin: 0;
     outline: none;
     padding: 13px 14px;
@@ -744,7 +810,7 @@ header {
 
 .contact-info1 input::placeholder,
 .contact-info1 textarea::placeholder {
-    color: #a3a3a3;
+    color: var(--input-placeholder);
     font-weight: 400;
 }
 
@@ -783,7 +849,7 @@ header {
 }
 
 footer {
-    background: #1c1917;
+    background: var(--dark-surface);
     color: var(--light);
     padding: 54px 0 24px;
 }
@@ -852,7 +918,7 @@ footer .container {
 
 footer hr {
     border: 0;
-    border-top: 1px solid #44403c;
+    border-top: 1px solid var(--border);
     margin: 34px 0 18px;
 }
 
@@ -873,7 +939,7 @@ footer hr {
 }
 
 .hr .link a {
-    background: #292524;
+    background: var(--social-bg);
     height: 34px;
     width: 34px;
 }
@@ -885,7 +951,7 @@ footer hr {
 
 @media (max-width: 900px) {
     .menu {
-        color: var(--dark);
+        color: var(--text);
         cursor: pointer;
         display: block;
         font-size: 25px;
@@ -893,7 +959,7 @@ footer hr {
 
     .nav {
         align-items: center;
-        background: #1c1917;
+        background: var(--dark-surface);
         box-shadow: -12px 0 32px rgba(0, 0, 0, 0.15);
         flex-direction: column;
         gap: 16px;
