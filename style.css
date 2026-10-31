@@ -431,11 +431,26 @@ header {
 .pro7,
 .pro8,
 .pro9,
-.pro10 {
+.pro10,
+.pro11,
+.pro12 {
     background: linear-gradient(90deg, #fb923c, var(--primary));
     border-radius: inherit;
     height: 100%;
 }
+
+.pro1 { width: 98%; }
+.pro2 { width: 90%; }
+.pro3 { width: 90%; }
+.pro4 { width: 70%; }
+.pro5 { width: 99%; }
+.pro6 { width: 90%; }
+.pro7 { width: 77%; }
+.pro8 { width: 90%; }
+.pro9 { width: 80%; }
+.pro10 { width: 60%; }
+.pro11 { width: 98%; }
+.pro12 { width: 90%; }
 
 .bar span {
     color: #d6d3d1;
@@ -879,6 +894,7 @@ footer hr {
         flex-direction: column;
         gap: 16px;
         height: 100vh;
+        height: 100dvh;
         justify-content: flex-start;
         padding: 24px;
         position: fixed;
@@ -998,11 +1014,11 @@ footer hr {
 
     .service .container,
     .project1 .container {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: minmax(0, 1fr);
     }
 
     .pro-card {
-        height: 230px;
+        height: 260px;
     }
 
     .contact-con {
@@ -1040,6 +1056,10 @@ footer hr {
         width: 100%;
     }
 
+    .project1 .container {
+        margin-bottom: 16px;
+    }
+
     .hr {
         flex-direction: column;
         gap: 14px;
@@ -1075,6 +1095,16 @@ footer hr {
     .button {
         align-items: stretch;
         flex-direction: column;
+    }
+
+    .con {
+        width: calc(100% - 32px);
+    }
+}
+
+@media (hover: none) {
+    .pro-link {
+        opacity: 1;
     }
 }
 
