@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Portfolio Dashboard | Mujahid Hussen</title>
+  <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin.css">
+  <script type="module" src="/admin.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <section class="login-card" id="login-view">
+      <a class="brand" href="/">Mujahid<span>.</span></a>
+      <p class="eyebrow">OWNER ACCESS</p>
+      <h1>Welcome back</h1>
+      <p class="muted">Sign in to manage your portfolio.</p>
+      <form id="login-form">
+        <label for="login-username">Username</label>
+        <input id="login-username" name="username" autocomplete="username" maxlength="100" required>
+        <label for="login-password">Password</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password" maxlength="1024" required>
+        <button class="button primary" type="submit">Sign in</button>
+      </form>
+      <p class="notice" id="login-status" role="status" aria-live="polite"></p>
+      <a class="back-link" href="/">Back to portfolio</a>
+    </section>
+
+    <section id="dashboard-view" hidden>
+      <header class="topbar">
+        <div>
+          <a class="brand" href="/">Mujahid<span>.</span></a>
+          <p class="muted">Portfolio dashboard</p>
+        </div>
+        <div class="top-actions">
+          <a class="button secondary" href="/" target="_blank" rel="noopener">View site</a>
+          <button class="button secondary" id="logout-button" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <p class="notice global-notice" id="dashboard-status" role="status" aria-live="polite"></p>
+
+      <section class="panel" aria-labelledby="profile-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">PORTFOLIO CONTENT</p>
+            <h1 id="profile-title">Personal information</h1>
+          </div>
+        </div>
+        <form class="form-grid" id="profile-form">
+          <label>Name<input name="name" maxlength="100" required></label>
+          <label>Professional title<input name="role" maxlength="120" required></label>
+          <label class="wide">About you<textarea name="bio" rows="3" maxlength="1200" required></textarea></label>
+          <label>Email<input name="email" type="email" maxlength="254" required></label>
+          <label>Phone<input name="phone" maxlength="40"></label>
+          <label>Age<input name="age" type="number" min="0" max="120" required></label>
+          <label>Gender<input name="gender" maxlength="50"></label>
+          <label>Languages<input name="languages" maxlength="150"></label>
+          <label>Work<input name="work" maxlength="120"></label>
+          <label>Freelance status<input name="freelance" maxlength="80"></label>
+          <label>Country<input name="country" maxlength="100"></label>
+          <label>Years of experience<input name="experienceYears" type="number" min="0" max="80" required></label>
+          <label>Project count<input name="projectCount" type="number" min="0" max="100000" required></label>
+          <label>Client count<input name="clientCount" type="number" min="0" max="100000" required></label>
+          <div class="wide form-actions">
+            <button class="button primary" type="submit">Save personal information</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="skills-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">CAPABILITIES</p>
+            <h2 id="skills-title">Skills</h2>
+          </div>
+        </div>
+        <form class="form-grid compact-form" id="skill-form">
+          <input type="hidden" name="id">
+          <label>Skill name<input name="name" maxlength="60" required></label>
+          <label>Proficiency (%)<input name="percent" type="number" min="0" max="100" required></label>
+          <label>Display order<input name="order" type="number" min="0" max="10000" value="0" required></label>
+          <div class="form-actions">
+            <button class="button primary" type="submit" id="skill-save">Add skill</button>
+            <button class="button secondary" type="button" data-cancel="skill-form" hidden>Cancel edit</button>
+          </div>
+        </form>
+        <div class="item-list" id="skills-list"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="projects-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">SELECTED WORK</p>
+            <h2 id="projects-title">Projects</h2>
+          </div>
+        </div>
+        <form class="form-grid" id="project-form">
+          <input type="hidden" name="id">
+          <label>Project title<input name="title" maxlength="120" required></label>
+          <label>Technologies<input name="technologies" maxlength="300"></label>
+          <label class="wide">Description<textarea name="description" rows="2" maxlength="1000" required></textarea></label>
+          <label>Image path or HTTPS URL<input name="imageUrl" maxlength="500" placeholder="/images/project.png" required></label>
+          <label>Live demo URL<input name="liveUrl" type="url" maxlength="500"></label>
+          <label>Source code URL<input name="sourceUrl" type="url" maxlength="500"></label>
+          <label>Display order<input name="order" type="number" min="0" max="10000" value="0" required></label>
+          <div class="wide form-actions">
+            <button class="button primary" type="submit" id="project-save">Add project</button>
+            <button class="button secondary" type="button" data-cancel="project-form" hidden>Cancel edit</button>
+          </div>
+        </form>
+        <div class="item-list" id="projects-list"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="messages-title">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">INBOX</p>
+            <h2 id="messages-title">Contact messages</h2>
+          </div>
+          <button class="button secondary" type="button" id="refresh-messages">Refresh</button>
+        </div>
+        <div class="item-list" id="messages-list"></div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
