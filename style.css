@@ -608,6 +608,12 @@ header {
     margin-bottom: 0;
 }
 
+#project-status {
+    color: #fed7aa;
+    font-size: 13px;
+    margin: -20px 0 20px;
+}
+
 .pro-card {
     background: #292524;
     border: 1px solid rgba(249, 115, 22, 0.35);

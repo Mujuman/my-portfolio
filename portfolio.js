@@ -123,6 +123,7 @@ function renderProfile(profile) {
 }
 
 async function loadPortfolio() {
+  const projectStatus = document.getElementById("project-status");
   const response = await fetch(`${apiBase}/portfolio`, {
     headers: { Accept: "application/json" }
   });
@@ -133,9 +134,13 @@ async function loadPortfolio() {
   renderProfile(portfolio.profile);
   renderSkills(portfolio.skills);
   renderProjects(portfolio.projects);
+  projectStatus.hidden = true;
 }
 
 loadPortfolio().catch((error) => {
+  const projectStatus = document.getElementById("project-status");
+  projectStatus.textContent = "Live project updates are unavailable. Showing the saved project list.";
+  projectStatus.hidden = false;
   console.warn("Portfolio content could not be refreshed from the server.", error);
 });
 

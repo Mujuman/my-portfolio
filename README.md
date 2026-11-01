@@ -26,7 +26,7 @@ Vercel's default deployment URL should also be added as an `APP_ORIGIN`-appropri
 ### Local development
 
 1. Run `npm install`.
-2. Copy `.env.example` to `.env`, then provide the rotated MongoDB URI, admin username, password hash, and a random session secret.
+2. Copy `server/.env.example` to `server/.env`, then provide the rotated MongoDB URI, admin username, password hash, and a random session secret.
 3. Start the server with `npm start` and visit `http://localhost:3000`.
 
 The initial portfolio records are inserted once on first API use. Existing edited records are not overwritten on later deploys.
