@@ -832,18 +832,30 @@ header {
 }
 
 .contact-info1 .send-btn {
-    background: var(--primary);
-    border-radius: 8px;
+    background: #ff6b0b;
+    border: 2px solid #fff;
+    border-radius: 9px;
+    box-shadow: 0 2px 0 rgba(255, 255, 255, 0.3);
     color: var(--light);
+    cursor: pointer;
     display: inline-flex;
+    font-size: 15px;
+    font-weight: 500;
     justify-content: center;
-    padding: 12px 20px;
-    transition: background 0.2s ease, transform 0.2s ease;
+    min-height: 52px;
+    padding: 11px 20px;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .contact-info1 .send-btn:hover {
     background: var(--secondary);
-    transform: translateY(-2px);
+    box-shadow: 0 4px 0 rgba(255, 255, 255, 0.24);
+    transform: translateY(-1px);
+}
+
+.contact-info1 .send-btn:focus-visible {
+    outline: 3px solid rgba(249, 115, 22, 0.45);
+    outline-offset: 3px;
 }
 
 .contact-info1 .send-btn:disabled {
