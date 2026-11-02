@@ -35,8 +35,9 @@ The MongoDB password previously shared in chat was exposed. Rotate it in Atlas b
 ### 3. Connect and redeploy the sites
 
 1. Both `frontend/vercel.json` and `admin/vercel.json` are configured to proxy to `https://mujahidh-api.vercel.app`.
-2. Commit and push those config changes so both Vercel projects redeploy.
-3. Open the public site and the admin project's root URL. Sign in to manage profile, skills, projects, and messages.
+2. Push the latest repository changes and redeploy the backend, public site, and admin site. The API entry point and admin favicon must be included in their respective deployments.
+3. Check `https://mujahidh-api.vercel.app/api/health`; a working API returns HTTP 200 with `{"status":"ok"}`. An unauthenticated request to the admin session endpoint should return HTTP 401, not 404.
+4. Open the public site and the admin project's root URL. Sign in to manage profile, skills, projects, and messages.
 
 The dashboard links back to `https://mujahidh.vercel.app/`. If the public domain changes, update the links and favicon URL in `admin/index.html`.
 
