@@ -31,18 +31,26 @@ test("portfolio slugs are normalized and safe for Mongo identifiers", () => {
   assert.equal(createSlug("***"), "");
 });
 
-test("origin validation only accepts the configured origin", () => {
+test("origin validation only accepts configured origins", () => {
   const originalOrigin = process.env.APP_ORIGIN;
-  process.env.APP_ORIGIN = "https://portfolio.example";
+  const originalOrigins = process.env.APP_ORIGINS;
+  delete process.env.APP_ORIGIN;
+  process.env.APP_ORIGINS = "https://portfolio.example,https://admin.example";
   const request = (origin) => ({
     get: (name) => name === "origin" ? origin : undefined,
     protocol: "https"
   });
   try {
     assert.equal(validOrigin(request("https://portfolio.example")), true);
+    assert.equal(validOrigin(request("https://admin.example")), true);
     assert.equal(validOrigin(request("https://attacker.example")), false);
     assert.equal(validOrigin(request(undefined)), true);
   } finally {
+    if (originalOrigins === undefined) {
+      delete process.env.APP_ORIGINS;
+    } else {
+      process.env.APP_ORIGINS = originalOrigins;
+    }
     if (originalOrigin === undefined) {
       delete process.env.APP_ORIGIN;
     } else {

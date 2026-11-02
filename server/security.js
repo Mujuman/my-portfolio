@@ -59,10 +59,23 @@ export function validOrigin(req) {
     return true;
   }
 
-  const expected = process.env.APP_ORIGIN ||
-    `${req.protocol}://${req.get("x-forwarded-host") || req.get("host")}`;
   try {
-    return new URL(origin).origin === new URL(expected).origin;
+    const requestOrigin = new URL(origin).origin;
+    const configuredOrigins = (process.env.APP_ORIGINS || process.env.APP_ORIGIN || "")
+      .split(",")
+      .map((value) => value.trim())
+      .filter(Boolean);
+    if (configuredOrigins.length) {
+      return configuredOrigins.some((value) => {
+        try {
+          return new URL(value).origin === requestOrigin && new URL(value).origin === value;
+        } catch {
+          return false;
+        }
+      });
+    }
+    const expected = `${req.protocol}://${req.get("x-forwarded-host") || req.get("host")}`;
+    return requestOrigin === new URL(expected).origin;
   } catch {
     return false;
   }

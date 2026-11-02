@@ -70,17 +70,23 @@ function isAdminConfigured() {
   if (!process.env.ADMIN_USERNAME || !process.env.SESSION_SECRET ||
       process.env.SESSION_SECRET.length < 32 ||
       !passwordHashFormatIsValid(process.env.ADMIN_PASSWORD_HASH) ||
-      !process.env.APP_ORIGIN) {
+      !process.env.APP_ORIGINS && !process.env.APP_ORIGIN) {
     return false;
   }
-  try {
-    const origin = new URL(process.env.APP_ORIGIN);
-    return origin.origin === process.env.APP_ORIGIN &&
-      (origin.protocol === "https:" ||
-        (origin.protocol === "http:" && ["localhost", "127.0.0.1"].includes(origin.hostname)));
-  } catch {
-    return false;
-  }
+  const origins = (process.env.APP_ORIGINS || process.env.APP_ORIGIN)
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+  return origins.length > 0 && origins.every((value) => {
+    try {
+      const origin = new URL(value);
+      return origin.origin === value &&
+        (origin.protocol === "https:" ||
+          (origin.protocol === "http:" && ["localhost", "127.0.0.1"].includes(origin.hostname)));
+    } catch {
+      return false;
+    }
+  });
 }
 
 const initializeRequest = asyncRoute(async (req, res, next) => {
