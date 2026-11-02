@@ -2,6 +2,9 @@
   "functions": {
     "api/[...path].js": {
       "maxDuration": 30
+    },
+    "api/admin/[...path].js": {
+      "maxDuration": 30
     }
   }
 }

@@ -33,7 +33,7 @@ async function api(path, options = {}) {
       csrfToken = "";
       showLogin();
     }
-    throw new Error(result.error || "The request could not be completed.");
+    throw new Error(result.error || `Request failed (${response.status} ${response.statusText}).`);
   }
   return result;
 }
