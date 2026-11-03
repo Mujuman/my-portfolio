@@ -220,9 +220,6 @@ router.post("/contact", sameOrigin, asyncRoute(async (req, res) => {
 }));
 
 router.post("/admin/login", asyncRoute(async (req, res) => {
-  if (!isAdminConfigured()) {
-    return res.status(503).json({ error: "Admin authentication is not configured." });
-  }
   if (!validOrigin(req)) {
     return res.status(403).json({ error: "This request origin is not allowed." });
   }
@@ -232,6 +229,29 @@ router.post("/admin/login", asyncRoute(async (req, res) => {
 
   const username = typeof req.body?.username === "string" ? req.body.username : "";
   const password = typeof req.body?.password === "string" ? req.body.password : "";
+
+  // Try MongoDB authentication first
+  if (username && password) {
+    try {
+      const adminUser = await AdminUser.findOne({ username: username }).lean();
+      if (adminUser && verifyPassword(password, adminUser.passwordHash)) {
+        await new Promise((resolve, reject) => {
+          req.session.regenerate((error) => error ? reject(error) : resolve());
+        });
+        req.session.admin = true;
+        req.session.csrfToken = randomBytes(32).toString("hex");
+        return res.json({ username: adminUser.username, csrfToken: req.session.csrfToken });
+      }
+    } catch (error) {
+      // MongoDB check failed, continue to env var check
+    }
+  }
+
+  // Fall back to environment variable authentication
+  if (!isAdminConfigured()) {
+    return res.status(503).json({ error: "Admin authentication is not configured." });
+  }
+
   const usernameMatches = username.length <= 100 &&
     username === process.env.ADMIN_USERNAME;
   const passwordMatches = password.length <= 1024 &&
