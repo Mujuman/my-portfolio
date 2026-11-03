@@ -64,6 +64,21 @@ app.use(helmet({
 }));
 app.use(express.json({ limit: "20kb", type: "application/json" }));
 
+// CORS headers for cross-origin credential requests
+app.use((req, res, next) => {
+  const origin = req.get("origin");
+  if (origin && (origin.includes("mujahidh-admin.vercel.app") || origin.includes("localhost"))) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token");
+  }
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+  next();
+});
+
 let sessionStore;
 
 function isAdminConfigured() {
