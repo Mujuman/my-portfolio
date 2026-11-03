@@ -5,7 +5,7 @@ import MongoStore from "connect-mongo";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import { connectDatabase, ensureInitialPortfolio } from "./database.js";
-import { ContactMessage, Profile, Project, Skill } from "./models.js";
+import { AdminUser, ContactMessage, Profile, Project, Skill } from "./models.js";
 import {
   createSlug,
   hasValidCsrfToken,

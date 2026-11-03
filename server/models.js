@@ -68,12 +68,20 @@ const requestBucketSchema = new Schema({
 }, { versionKey: false });
 requestBucketSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
+const adminSchema = new Schema({
+  _id: { type: String, default: "admin" },
+  username: { type: String, required: true, unique: true },
+  passwordHash: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
+}, { versionKey: false });
+
 const profileModel = (name, schema) => mongoose.models[name] || mongoose.model(name, schema);
 
 export const Profile = profileModel("PortfolioProfile", profileSchema);
 export const Skill = profileModel("PortfolioSkill", skillSchema);
 export const Project = profileModel("PortfolioProject", projectSchema);
 export const ContactMessage = profileModel("PortfolioContactMessage", messageSchema);
+export const AdminUser = profileModel("AdminUser", adminSchema);
 export const PortfolioState = profileModel("PortfolioState", new Schema({
   _id: String,
   complete: { type: Boolean, default: false }
