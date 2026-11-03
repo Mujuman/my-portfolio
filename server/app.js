@@ -67,15 +67,27 @@ app.use(express.json({ limit: "20kb", type: "application/json" }));
 // CORS headers for cross-origin credential requests
 app.use((req, res, next) => {
   const origin = req.get("origin");
-  if (origin && (origin.includes("mujahidh-admin.vercel.app") || origin.includes("localhost"))) {
+  const adminOrigins = ["mujahidh-admin.vercel.app", "localhost", "127.0.0.1"];
+  const isAllowedOrigin = origin && adminOrigins.some(allowed => origin.includes(allowed));
+  
+  if (isAllowedOrigin) {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, PATCH");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-CSRF-Token, Authorization");
+    res.setHeader("Access-Control-Max-Age", "86400");
   }
+  
+  // Always handle OPTIONS requests
   if (req.method === "OPTIONS") {
+    console.log(`CORS preflight: ${req.method} ${req.path} from origin: ${origin}`);
     return res.status(200).end();
   }
+  
+  if (req.method === "DELETE") {
+    console.log(`DELETE request: ${req.path} from origin: ${origin}`);
+  }
+  
   next();
 });
 
