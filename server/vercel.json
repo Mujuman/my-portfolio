@@ -6,5 +6,8 @@
     "api/admin/[...path].js": {
       "maxDuration": 30
     }
+  },
+  "env": {
+    "NODEJS_HELPERS": "true"
   }
 }
