@@ -120,6 +120,8 @@ const initializeRequest = asyncRoute(async (req, res, next) => {
         ttl: 60 * 60 * 8,
         autoRemove: "native"
       });
+      // Prevent MaxListeners warning
+      sessionStore.setMaxListeners(20);
     }
     session({
       name: "portfolio.sid",
