@@ -371,6 +371,7 @@ router.post("/admin/skills", requireAdmin, csrf, asyncRoute(async (req, res) => 
 }));
 
 router.put("/admin/skills/:id", requireAdmin, csrf, asyncRoute(async (req, res) => {
+  const skillId = req.params.id;
   const { name, percent, order = 0 } = req.body || {};
   const normalizedName = typeof name === "string" ? name.trim() : "";
   const parsedPercent = Number(percent);
@@ -379,20 +380,26 @@ router.put("/admin/skills/:id", requireAdmin, csrf, asyncRoute(async (req, res) 
       parsedPercent < 0 || parsedPercent > 100 || parsedOrder === null) {
     return res.status(400).json({ error: "Enter a skill name and a whole-number percentage from 0 to 100." });
   }
-  const skill = await Skill.findByIdAndUpdate(req.params.id, {
+  const skill = await Skill.findByIdAndUpdate(skillId, {
     $set: { name: normalizedName, percent: parsedPercent, order: parsedOrder }
   }, { new: true, runValidators: true }).lean();
   if (!skill) {
+    console.log(`Skill not found for update: ${skillId}`);
     return res.status(404).json({ error: "Skill not found." });
   }
+  console.log(`Skill updated: ${skillId}`);
   res.json({ skill: { id: skill._id, name: skill.name, percent: skill.percent, order: skill.order } });
 }));
 
 router.delete("/admin/skills/:id", requireAdmin, csrf, asyncRoute(async (req, res) => {
-  const result = await Skill.findByIdAndDelete(req.params.id);
+  const skillId = req.params.id;
+  console.log(`Attempting to delete skill: ${skillId}`);
+  const result = await Skill.findByIdAndDelete(skillId);
   if (!result) {
+    console.log(`Skill not found: ${skillId}`);
     return res.status(404).json({ error: "Skill not found." });
   }
+  console.log(`Skill deleted successfully: ${skillId}`);
   res.status(204).end();
 }));
 
@@ -446,10 +453,14 @@ function normalizeProject(body = {}) {
 }
 
 router.delete("/admin/projects/:id", requireAdmin, csrf, asyncRoute(async (req, res) => {
-  const result = await Project.findByIdAndDelete(req.params.id);
+  const projectId = req.params.id;
+  console.log(`Attempting to delete project: ${projectId}`);
+  const result = await Project.findByIdAndDelete(projectId);
   if (!result) {
+    console.log(`Project not found: ${projectId}`);
     return res.status(404).json({ error: "Project not found." });
   }
+  console.log(`Project deleted successfully: ${projectId}`);
   res.status(204).end();
 }));
 
