@@ -327,6 +327,14 @@ router.put("/admin/profile", requireAdmin, csrf, asyncRoute(async (req, res) => 
   res.json({ profile: safeProfile(updated) });
 }));
 
+router.get("/admin/skills/:id", requireAdmin, asyncRoute(async (req, res) => {
+  const skill = await Skill.findById(req.params.id).lean();
+  if (!skill) {
+    return res.status(404).json({ error: "Skill not found." });
+  }
+  res.json({ skill: { id: skill._id, name: skill.name, percent: skill.percent, order: skill.order } });
+}));
+
 router.post("/admin/skills", requireAdmin, csrf, asyncRoute(async (req, res) => {
   const { name, percent, order = 0 } = req.body || {};
   const normalizedName = typeof name === "string" ? name.trim() : "";
@@ -378,6 +386,14 @@ router.post("/admin/projects", requireAdmin, csrf, asyncRoute(async (req, res) =
   }
   const created = await Project.create({ _id: createSlug(project.title), ...project.value });
   res.status(201).json({ project: { id: created._id, ...created.toObject() } });
+}));
+
+router.get("/admin/projects/:id", requireAdmin, asyncRoute(async (req, res) => {
+  const project = await Project.findById(req.params.id).lean();
+  if (!project) {
+    return res.status(404).json({ error: "Project not found." });
+  }
+  res.json({ project: { id: project._id, ...project } });
 }));
 
 router.put("/admin/projects/:id", requireAdmin, csrf, asyncRoute(async (req, res) => {
