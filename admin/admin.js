@@ -22,7 +22,7 @@ async function api(path, options = {}) {
   const response = await fetch(`/api${path}`, {
     ...options,
     headers,
-    credentials: "same-origin"
+    credentials: "include"
   });
   if (response.status === 204) {
     return null;
