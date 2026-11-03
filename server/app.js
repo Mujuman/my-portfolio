@@ -175,7 +175,7 @@ function logDatabaseConnectionFailure(error) {
 }
 
 router.get("/health", (req, res) => {
-  res.json({ status: "ok" });
+  res.json({ status: "ok", endpoints: "skills and projects GET endpoints added" });
 });
 
 router.get("/portfolio", asyncRoute(async (req, res) => {
