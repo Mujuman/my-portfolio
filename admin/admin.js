@@ -6,6 +6,10 @@ const dashboardStatus = document.getElementById("dashboard-status");
 let csrfToken = "";
 let state = { profile: null, skills: [], projects: [] };
 
+// Cross-origin credentials fix - version 2
+// Allows cookies to be sent across different domains
+// Admin: mujahidh-admin.vercel.app, API: mujahidh-api.vercel.app
+
 function setNotice(element, message, kind = "") {
   element.textContent = message;
   element.dataset.kind = kind;
@@ -22,7 +26,7 @@ async function api(path, options = {}) {
   const response = await fetch(`/api${path}`, {
     ...options,
     headers,
-    credentials: "include"
+    credentials: "include"  // CRITICAL: Include cookies for cross-origin requests
   });
   if (response.status === 204) {
     return null;
@@ -33,6 +37,8 @@ async function api(path, options = {}) {
       csrfToken = "";
       showLogin();
     }
+    // Log errors for debugging
+    console.error(`API Error: ${options.method || 'GET'} ${path} - ${response.status}`, result);
     throw new Error(result.error || `Request failed (${response.status} ${response.statusText}).`);
   }
   return result;
